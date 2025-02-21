@@ -22,4 +22,10 @@ spectator = world.get_spectator()
 transform = carla.Transform(vehicle.get_transform().transform(carla.Location(x=-4, z=2.5)), vehicle.get_transform().rotation)
 spectator.set_transform(transform)
 
-camera_bp = bp_lib
+camera_bp = bp_lib.find('sensor.camera.rgb')
+camera_init_trans = carla.Transform(carla.Location(z=1, x=0.6))
+camera = world.spawn_actor(camera_bp, camera_init_trans, attach_to=vehicle)
+
+time.sleep(0.2)
+spectator.set_transform(camera.get_transform())
+camera.destroy()
